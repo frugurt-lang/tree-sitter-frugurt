@@ -1,0 +1,61 @@
+let a = 5;
+
+let b = 1 + 2 + 3 * 4 - 5;
+
+b = {
+    let x = b * 2;
+
+    x * x
+};
+
+{
+    let f = fn (a, b, c) { a + b + c };
+
+    let g = f$(3, 4);
+
+    print(g(4));
+}
+
+if if if if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false} {if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false}} else {false} {if if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false} {if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false}} else {false}} else {false} {if if if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false} {if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false}} else {false} {if if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false} {if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false}} else {false}} else {false}} else {false};
+
+while a >= 0 {
+    print(a);
+    a = a - 1;
+}
+
+uff(s).x.y = 1;
+
+return shit;
+
+break;
+
+continue;
+
+let b = Box:{ 3 };
+
+struct Vec2 {
+    x;
+    y;
+}
+
+operator + (a : Vec2, b : Vec2) {
+    Vec2 :{ a.x + b.x, a.y + b.y }
+}
+
+commutative operator * (a : Vec2, k : Number) {
+    Vec2 :{ a.x * k, a.y * k }
+}
+
+operator +-*/%=<>&|^!? (a : Number, k : Number) {
+    a * k
+}
+
+let v1 = Vec2 :{ 1, 2 };
+let v2 = Vec2 :{ 3, 4 };
+
+t_eq(v1 + v2, Vec2 :{ 4, 6 });
+
+t_eq(v1 * 2, Vec2 :{ 2, 4 });
+t_eq(5 * v1 * 2, Vec2 :{ 10, 20 });
+
+t_eq(6 +-*/%=<>&|^!? 9, 54);

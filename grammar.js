@@ -145,7 +145,7 @@ module.exports = grammar({
         // Expressions
 
         _expression: $ => choice(
-            $.literal,
+            $._literal,
             $.identifier,
             $.block_expression,
             $.call_expression,
@@ -158,7 +158,7 @@ module.exports = grammar({
         ),
 
         _nb_expression: $ => prec(3, choice(
-            $.literal,
+            $._literal,
             $.identifier,
             $.block_expression,
             $.call_expression,
@@ -169,7 +169,7 @@ module.exports = grammar({
             $.if_expression,
         )),
 
-        literal: $ => choice(
+        _literal: $ => choice(
             $.number_literal,
             $.string_literal,
             $.boolean_literal,

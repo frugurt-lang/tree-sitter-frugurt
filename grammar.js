@@ -152,7 +152,7 @@ module.exports = grammar({
             "}",
         ),
 
-        type_type: $ => choice("struct"),
+        type_type: $ => choice("struct", "class", "data"),
 
         type_field: $ => seq(
             optional(field("pub", "pub")),

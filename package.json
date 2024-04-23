@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-frugurt",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Frugurt grammar for tree-sitter",
   "repository": "github:tree-sitter/tree-sitter-frugurt",
   "license": "MIT",
@@ -47,7 +47,13 @@
   "tree-sitter": [
     {
       "scope": "source.frugurt",
-      "injection-regex": "^frugurt$"
+      "injection-regex": "^frugurt$",
+      "content-regex": "^:{$",
+      "file-types": [
+        "fru",
+        "frugurt"
+      ],
+      "highlights": "queries/highlights.scm"
     }
   ]
 }

@@ -1,0 +1,56 @@
+let a = 1;
+let string = "Hi" <> " mom!";
+print(a, string, 4);
+
+{
+    let a = fn (x, y, z) { x * y + z };
+    let g = a$(1, 5);
+    print(g(7));
+}
+
+if if if if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false} {if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false}} else {false} {if if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false} {if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false}} else {false}} else {false} {if if if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false} {if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false}} else {false} {if if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false} {if if if true {true} else {false} {if true {true} else {false}} else {false} {if if true {true} else {false} {if true {true} else {false}} else {false}} else {false}} else {false}} else {false}} else {false};
+
+while a >= 0 {
+    print(a);
+    a = a - 1;
+    return shit;
+    break;
+    continue;
+}
+
+struct Box {
+    pub x;
+    y : Number;
+    pub static k : Number = 2;
+
+    -----impl-----
+
+    rotate180(n) {
+        while n > 0 {
+            x = -1 * x;
+            y = -1 * y;
+            n = n - 1;
+        }
+    }
+
+    -----static-----
+
+    double() {
+        k = k * 2;
+    }
+}
+
+
+operator + (a : Vec2, b : Vec2) {
+    Vec2 :{ a.x + b.x, a.y + b.y }
+}
+
+commutative operator * (a : Vec2, k : Number) {
+    Vec2 :{ a.x * k, a.y * k }
+}
+
+operator +-*/%=<>&|^!? (a : Number, k : Number) {
+    a * k
+}
+
+let v1 = Vec2 :{ 1, 2 };

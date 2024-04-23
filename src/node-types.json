@@ -1822,11 +1822,19 @@
     "named": false
   },
   {
+    "type": "class",
+    "named": false
+  },
+  {
     "type": "commutative",
     "named": false
   },
   {
     "type": "continue",
+    "named": false
+  },
+  {
+    "type": "data",
     "named": false
   },
   {

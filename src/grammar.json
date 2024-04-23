@@ -574,6 +574,14 @@
         {
           "type": "STRING",
           "value": "struct"
+        },
+        {
+          "type": "STRING",
+          "value": "class"
+        },
+        {
+          "type": "STRING",
+          "value": "data"
         }
       ]
     },

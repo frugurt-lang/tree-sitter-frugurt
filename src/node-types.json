@@ -1,138 +1,124 @@
 [
   {
+    "type": "_expression",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "binaries_expression",
+        "named": true
+      },
+      {
+        "type": "block_expression",
+        "named": true
+      },
+      {
+        "type": "bool_literal",
+        "named": true
+      },
+      {
+        "type": "call_expression",
+        "named": true
+      },
+      {
+        "type": "curry_call_expression",
+        "named": true
+      },
+      {
+        "type": "field_access_expression",
+        "named": true
+      },
+      {
+        "type": "function_expression",
+        "named": true
+      },
+      {
+        "type": "if_expression",
+        "named": true
+      },
+      {
+        "type": "instantiation_expression",
+        "named": true
+      },
+      {
+        "type": "nah_literal",
+        "named": true
+      },
+      {
+        "type": "number_literal",
+        "named": true
+      },
+      {
+        "type": "string_literal",
+        "named": true
+      },
+      {
+        "type": "variable",
+        "named": true
+      }
+    ]
+  },
+  {
+    "type": "_statement",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "block_statement",
+        "named": true
+      },
+      {
+        "type": "break_statement",
+        "named": true
+      },
+      {
+        "type": "continue_statement",
+        "named": true
+      },
+      {
+        "type": "expression_statement",
+        "named": true
+      },
+      {
+        "type": "if_statement",
+        "named": true
+      },
+      {
+        "type": "let_statement",
+        "named": true
+      },
+      {
+        "type": "operator_statement",
+        "named": true
+      },
+      {
+        "type": "return_statement",
+        "named": true
+      },
+      {
+        "type": "set_field_statement",
+        "named": true
+      },
+      {
+        "type": "set_statement",
+        "named": true
+      },
+      {
+        "type": "type_statement",
+        "named": true
+      },
+      {
+        "type": "while_statement",
+        "named": true
+      }
+    ]
+  },
+  {
     "type": "binaries_expression",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "block_expression",
-          "named": true
-        },
-        {
-          "type": "bool_literal",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "curry_call_expression",
-          "named": true
-        },
-        {
-          "type": "field_access_expression",
-          "named": true
-        },
-        {
-          "type": "function_expression",
-          "named": true
-        },
-        {
-          "type": "if_expression",
-          "named": true
-        },
-        {
-          "type": "instantiation_expression",
-          "named": true
-        },
-        {
-          "type": "nah_literal",
-          "named": true
-        },
-        {
-          "type": "number_literal",
-          "named": true
-        },
-        {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "variable",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "block_comment",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "block_expression",
-    "named": true,
     "fields": {
-      "body": {
+      "content": {
         "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "block_statement",
-            "named": true
-          },
-          {
-            "type": "break_statement",
-            "named": true
-          },
-          {
-            "type": "continue_statement",
-            "named": true
-          },
-          {
-            "type": "expression_statement",
-            "named": true
-          },
-          {
-            "type": "if_statement",
-            "named": true
-          },
-          {
-            "type": "let_statement",
-            "named": true
-          },
-          {
-            "type": "operator_statement",
-            "named": true
-          },
-          {
-            "type": "return_statement",
-            "named": true
-          },
-          {
-            "type": "set_field_statement",
-            "named": true
-          },
-          {
-            "type": "set_statement",
-            "named": true
-          },
-          {
-            "type": "type_statement",
-            "named": true
-          },
-          {
-            "type": "while_statement",
-            "named": true
-          }
-        ]
-      },
-      "expr": {
-        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "binaries_expression",
-            "named": true
-          },
           {
             "type": "block_expression",
             "named": true
@@ -174,11 +160,41 @@
             "named": true
           },
           {
+            "type": "operator",
+            "named": true
+          },
+          {
             "type": "string_literal",
             "named": true
           },
           {
             "type": "variable",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "block_expression",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "_statement",
+            "named": true
+          }
+        ]
+      },
+      "expr": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
             "named": true
           }
         ]
@@ -194,51 +210,7 @@
         "required": false,
         "types": [
           {
-            "type": "block_statement",
-            "named": true
-          },
-          {
-            "type": "break_statement",
-            "named": true
-          },
-          {
-            "type": "continue_statement",
-            "named": true
-          },
-          {
-            "type": "expression_statement",
-            "named": true
-          },
-          {
-            "type": "if_statement",
-            "named": true
-          },
-          {
-            "type": "let_statement",
-            "named": true
-          },
-          {
-            "type": "operator_statement",
-            "named": true
-          },
-          {
-            "type": "return_statement",
-            "named": true
-          },
-          {
-            "type": "set_field_statement",
-            "named": true
-          },
-          {
-            "type": "set_statement",
-            "named": true
-          },
-          {
-            "type": "type_statement",
-            "named": true
-          },
-          {
-            "type": "while_statement",
+            "type": "_statement",
             "named": true
           }
         ]
@@ -264,55 +236,7 @@
         "required": false,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -387,55 +311,7 @@
         "required": false,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -505,55 +381,7 @@
         "required": true,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -669,55 +497,7 @@
         "required": true,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -757,55 +537,7 @@
         "required": true,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -845,55 +577,7 @@
         "required": false,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -973,65 +657,12 @@
         "required": true,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
       }
     }
-  },
-  {
-    "type": "line_comment",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "operator",
@@ -1127,55 +758,7 @@
         "required": false,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1191,55 +774,7 @@
         "required": true,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1275,55 +810,7 @@
         "required": true,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1339,51 +826,7 @@
         "required": false,
         "types": [
           {
-            "type": "block_statement",
-            "named": true
-          },
-          {
-            "type": "break_statement",
-            "named": true
-          },
-          {
-            "type": "continue_statement",
-            "named": true
-          },
-          {
-            "type": "expression_statement",
-            "named": true
-          },
-          {
-            "type": "if_statement",
-            "named": true
-          },
-          {
-            "type": "let_statement",
-            "named": true
-          },
-          {
-            "type": "operator_statement",
-            "named": true
-          },
-          {
-            "type": "return_statement",
-            "named": true
-          },
-          {
-            "type": "set_field_statement",
-            "named": true
-          },
-          {
-            "type": "set_statement",
-            "named": true
-          },
-          {
-            "type": "type_statement",
-            "named": true
-          },
-          {
-            "type": "while_statement",
+            "type": "_statement",
             "named": true
           }
         ]
@@ -1455,55 +898,7 @@
         "required": false,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1702,55 +1097,7 @@
         "required": true,
         "types": [
           {
-            "type": "binaries_expression",
-            "named": true
-          },
-          {
-            "type": "block_expression",
-            "named": true
-          },
-          {
-            "type": "bool_literal",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "curry_call_expression",
-            "named": true
-          },
-          {
-            "type": "field_access_expression",
-            "named": true
-          },
-          {
-            "type": "function_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "instantiation_expression",
-            "named": true
-          },
-          {
-            "type": "nah_literal",
-            "named": true
-          },
-          {
-            "type": "number_literal",
-            "named": true
-          },
-          {
-            "type": "string_literal",
-            "named": true
-          },
-          {
-            "type": "variable",
+            "type": "_expression",
             "named": true
           }
         ]
@@ -1767,10 +1114,6 @@
   },
   {
     "type": ")",
-    "named": false
-  },
-  {
-    "type": "*/",
     "named": false
   },
   {
@@ -1791,14 +1134,6 @@
   },
   {
     "type": ".",
-    "named": false
-  },
-  {
-    "type": "/*",
-    "named": false
-  },
-  {
-    "type": "//",
     "named": false
   },
   {
@@ -1824,6 +1159,10 @@
   {
     "type": "class",
     "named": false
+  },
+  {
+    "type": "comment",
+    "named": true
   },
   {
     "type": "commutative",

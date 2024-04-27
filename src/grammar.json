@@ -1,5 +1,6 @@
 {
   "name": "frugurt",
+  "word": "identifier",
   "rules": {
     "source_file": {
       "type": "FIELD",
@@ -30,58 +31,42 @@
       ]
     },
     "comment": {
-      "type": "PREC",
-      "value": 100,
+      "type": "TOKEN",
       "content": {
         "type": "CHOICE",
         "members": [
           {
-            "type": "SYMBOL",
-            "name": "line_comment"
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "//"
+              },
+              {
+                "type": "PATTERN",
+                "value": ".*"
+              }
+            ]
           },
           {
-            "type": "SYMBOL",
-            "name": "block_comment"
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "/*"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[^*]*\\*+([^/*][^*]*\\*+)*"
+              },
+              {
+                "type": "STRING",
+                "value": "/"
+              }
+            ]
           }
         ]
       }
-    },
-    "line_comment": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "//"
-        },
-        {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "PREC",
-            "value": 1,
-            "content": {
-              "type": "PATTERN",
-              "value": ".*"
-            }
-          }
-        }
-      ]
-    },
-    "block_comment": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "/*"
-        },
-        {
-          "type": "PATTERN",
-          "value": ".*?"
-        },
-        {
-          "type": "STRING",
-          "value": "*/"
-        }
-      ]
     },
     "_statement": {
       "type": "CHOICE",
@@ -1023,7 +1008,7 @@
     },
     "string_literal": {
       "type": "PATTERN",
-      "value": "\"[^\"]*\""
+      "value": "\"(?:[^\\\\\\n\"]|\\\\[\\\\\"tnvfr]|\\\\u\\{[0-9a-fA-F]+}|\\\\\\r?\\n)*\""
     },
     "bool_literal": {
       "type": "CHOICE",
@@ -1218,8 +1203,12 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_nb_expression"
+          "type": "FIELD",
+          "name": "content",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_nb_expression"
+          }
         },
         {
           "type": "REPEAT1",
@@ -1230,12 +1219,20 @@
               "type": "SEQ",
               "members": [
                 {
-                  "type": "SYMBOL",
-                  "name": "operator"
+                  "type": "FIELD",
+                  "name": "content",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "operator"
+                  }
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "_nb_expression"
+                  "type": "FIELD",
+                  "name": "content",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_nb_expression"
+                  }
                 }
               ]
             }
@@ -1464,11 +1461,18 @@
     {
       "type": "PATTERN",
       "value": "\\s"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "comment"
     }
   ],
   "conflicts": [],
   "precedences": [],
   "externals": [],
   "inline": [],
-  "supertypes": []
+  "supertypes": [
+    "_expression",
+    "_statement"
+  ]
 }

@@ -3,10 +3,17 @@
 module.exports = grammar({
     name: "frugurt",
 
-    // extras: $ => [
-    //     /\s/,
-    //     $.comment,
-    // ],
+    extras: $ => [
+        /\s/,
+        $.comment,
+    ],
+
+    word: $ => $.identifier,
+
+    supertypes: $ => [
+        $._expression,
+        $._statement,
+    ],
 
 
     rules: {
@@ -21,21 +28,15 @@ module.exports = grammar({
             /[-+*\/%=<>&|^!?][-+*\/%=<>&|^!?]+/, //I have no idea why {2,} does not work
         ),
 
-        comment: $ => prec(100, choice(
-            $.line_comment,
-            $.block_comment,
+        // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
+        comment: _ => token(choice(
+            seq("//", /.*/),
+            seq(
+                "/*",
+                /[^*]*\*+([^/*][^*]*\*+)*/,
+                "/",
+            ),
         )),
-
-        line_comment: $ => seq(
-            "//",
-            token.immediate(prec(1, /.*/)),
-        ),
-
-        block_comment: $ => seq(
-            "/*",
-            /.*?/,
-            "*/",
-        ),
 
         // Statements
 
@@ -245,7 +246,8 @@ module.exports = grammar({
 
         number_literal: $ => /[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/,
 
-        string_literal: $ => /"[^"]*"/,
+        // TODO: maybe add \uxxxx support
+        string_literal: $ => /"(?:[^\\\n"]|\\[\\"tnvfr]|\\u\{[0-9a-fA-F]+}|\\\r?\n)*"/,
 
         bool_literal: $ => choice("true", "false"),
 
@@ -275,10 +277,10 @@ module.exports = grammar({
         )),
 
         binaries_expression: $ => seq(
-            $._nb_expression,
+            field("content", $._nb_expression),
             repeat1(prec.left(seq(
-                $.operator,
-                $._nb_expression,
+                field("content", $.operator),
+                field("content", $._nb_expression),
             ))),
         ),
 

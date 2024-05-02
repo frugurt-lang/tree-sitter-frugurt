@@ -213,25 +213,17 @@ module.exports = grammar({
         // Expressions
 
         _expression: $ => choice(
-            $._literal,
-            $.variable,
-            $.block_expression,
-            $.call_expression,
-            $.curry_call_expression,
-            $.binaries_expression,
-            $.function_expression,
-            $.instantiation_expression,
-            $.field_access_expression,
-            $.if_expression,
+            $._expression_unit,
+            $.binary_expression,
         ),
 
-        _nb_expression: $ => prec(3, choice(
+        _expression_unit: $ => prec(3, choice(
             $._literal,
             $.variable,
+            $.function_expression,
             $.block_expression,
             $.call_expression,
             $.curry_call_expression,
-            $.function_expression,
             $.instantiation_expression,
             $.field_access_expression,
             $.if_expression,
@@ -253,36 +245,7 @@ module.exports = grammar({
 
         nah_literal: $ => "nah",
 
-        variable: $ => field("name", $.identifier),
-
-        block_expression: $ => seq(
-            "{",
-            field("body", repeat($._statement)),
-            field("expr", $._expression),
-            "}",
-        ),
-
-        call_expression: $ => prec(1, seq(
-            field("what", $._nb_expression),
-            "(",
-            sepBy(",", field("args", $._expression)),
-            ")",
-        )),
-
-        curry_call_expression: $ => prec(1, seq(
-            field("what", $._nb_expression),
-            "$(",
-            sepBy(",", field("args", $._expression)),
-            ")",
-        )),
-
-        binaries_expression: $ => seq(
-            field("content", $._nb_expression),
-            repeat1(prec.left(seq(
-                field("content", $.operator),
-                field("content", $._nb_expression),
-            ))),
-        ),
+        variable: $ => field("ident", $.identifier),
 
         function_expression: $ => seq(
             "fn",
@@ -295,18 +258,67 @@ module.exports = grammar({
             )),
         ),
 
+        block_expression: $ => seq(
+            "{",
+            field("body", repeat($._statement)),
+            field("expr", $._expression),
+            "}",
+        ),
+
+        call_expression: $ => prec(1, seq(
+            field("what", $._expression_unit),
+            "(",
+            sepBy(",", field("args", $._expression)),
+            ")",
+        )),
+
+        curry_call_expression: $ => prec(1, seq(
+            field("what", $._expression_unit),
+            "$(",
+            sepBy(",", field("args", $._expression)),
+            ")",
+        )),
+
         instantiation_expression: $ => prec(1, seq(
-            field("what", $._nb_expression),
+            field("what", $._expression_unit),
             ":{",
             sepBy(",", field("args", $._expression)),
             "}",
         )),
 
         field_access_expression: $ => prec(1, seq(
-            field("what", $._nb_expression),
+            field("what", $._expression_unit),
             ".",
             field("field", $.identifier),
         )),
+
+        binary_expression: $ => choice(
+            ...([
+                [1, "||"],
+                [2, "&&"],
+                [3, "=="],
+                [3, "!="],
+                [4, "<"],
+                [4, ">"],
+                [4, "<="],
+                [4, ">="],
+                [5, "+"],
+                [5, "-"],
+                [6, "*"],
+                [6, "/"],
+                [6, "%"],
+                [7, "**"],
+                [7, "<>"],
+                [50, $.operator],
+            ].map(
+                ([precedence, operator]) =>
+                    prec.left(precedence, seq(
+                        field("left", $._expression),
+                        field("operator", operator),
+                        field("right", $._expression),
+                    )),
+            )),
+        ),
 
         if_expression: $ => seq(
             "if",

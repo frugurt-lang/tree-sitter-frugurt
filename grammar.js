@@ -1,4 +1,4 @@
-// noinspection JSUnusedLocalSymbols,JSUnresolvedReference
+// noinspection JSUnresolvedReference
 
 module.exports = grammar({
     name: "frugurt",
@@ -17,13 +17,14 @@ module.exports = grammar({
 
 
     rules: {
-        source_file: $ => field("body", repeat($._statement)),
+        source_file: $ => repeat(field("body", $._statement)),
 
         // Misc
 
-        identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
+        // TODO: maybe add ' as valid symbol
+        identifier: _ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
-        operator: $ => choice(
+        operator: _ => choice(
             /[-+*\/%<>&|^!?]/,
             /[-+*\/%=<>&|^!?][-+*\/%=<>&|^!?]+/, //I have no idea why {2,} does not work
         ),
@@ -57,14 +58,14 @@ module.exports = grammar({
 
         block_statement: $ => seq(
             "{",
-            field("body", repeat($._statement)),
+            repeat(field("body", $._statement)),
             "}",
         ),
 
-        expression_statement: $ => prec(9, seq(
+        expression_statement: $ => seq(
             field("value", $._expression),
             ";",
-        )),
+        ),
 
         let_statement: $ => seq(
             "let",
@@ -81,12 +82,14 @@ module.exports = grammar({
             ";",
         ),
 
-        set_field_statement: $ => prec(11, seq(
-            field("what", $.field_access_expression),
+        set_field_statement: $ => seq(
+            field("what", $._expression_unit),
+            ".",
+            field("field", $.identifier),
             "=",
             field("value", $._expression),
             ";",
-        )),
+        ),
 
         if_statement: $ => seq(
             "if",
@@ -101,7 +104,6 @@ module.exports = grammar({
             )),
         ),
 
-
         while_statement: $ => seq(
             "while",
             field("condition", $._expression),
@@ -114,12 +116,12 @@ module.exports = grammar({
             ";",
         ),
 
-        break_statement: $ => seq(
+        break_statement: _ => seq(
             "break",
             ";",
         ),
 
-        continue_statement: $ => seq(
+        continue_statement: _ => seq(
             "continue",
             ";",
         ),
@@ -153,7 +155,7 @@ module.exports = grammar({
             "}",
         ),
 
-        type_type: $ => choice("struct", "class", "data"),
+        type_type: _ => choice("struct", "class", "data"),
 
         type_field: $ => seq(
             optional(field("pub", "pub")),
@@ -217,7 +219,7 @@ module.exports = grammar({
             $.binary_expression,
         ),
 
-        _expression_unit: $ => prec(3, choice(
+        _expression_unit: $ => choice(
             $._literal,
             $.variable,
             $.function_expression,
@@ -227,7 +229,7 @@ module.exports = grammar({
             $.instantiation_expression,
             $.field_access_expression,
             $.if_expression,
-        )),
+        ),
 
         _literal: $ => choice(
             $.number_literal,
@@ -236,14 +238,14 @@ module.exports = grammar({
             $.nah_literal,
         ),
 
-        number_literal: $ => /[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/,
+        number_literal: _ => /[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/,
 
         // TODO: maybe add \uxxxx support
-        string_literal: $ => /"(?:[^\\\n"]|\\[\\"tnvfr]|\\u\{[0-9a-fA-F]+}|\\\r?\n)*"/,
+        string_literal: _ => /"(?:[^\\\n"]|\\[\\"tnvfr]|\\u\{[0-9a-fA-F]+}|\\\r?\n)*"/,
 
-        bool_literal: $ => choice("true", "false"),
+        bool_literal: _ => choice("true", "false"),
 
-        nah_literal: $ => "nah",
+        nah_literal: _ => "nah",
 
         variable: $ => field("ident", $.identifier),
 
@@ -260,37 +262,37 @@ module.exports = grammar({
 
         block_expression: $ => seq(
             "{",
-            field("body", repeat($._statement)),
+            repeat(field("body", $._statement)),
             field("expr", $._expression),
             "}",
         ),
 
-        call_expression: $ => prec(1, seq(
+        call_expression: $ => seq(
             field("what", $._expression_unit),
             "(",
             sepBy(",", field("args", $._expression)),
             ")",
-        )),
+        ),
 
-        curry_call_expression: $ => prec(1, seq(
+        curry_call_expression: $ => seq(
             field("what", $._expression_unit),
             "$(",
             sepBy(",", field("args", $._expression)),
             ")",
-        )),
+        ),
 
-        instantiation_expression: $ => prec(1, seq(
+        instantiation_expression: $ => seq(
             field("what", $._expression_unit),
             ":{",
             sepBy(",", field("args", $._expression)),
             "}",
-        )),
+        ),
 
-        field_access_expression: $ => prec(1, seq(
+        field_access_expression: $ => seq(
             field("what", $._expression_unit),
             ".",
             field("field", $.identifier),
-        )),
+        ),
 
         binary_expression: $ => choice(
             ...([
@@ -334,11 +336,11 @@ module.exports = grammar({
 });
 
 
-function sepBy1(sep, rule) {
-    return seq(rule, repeat(seq(sep, rule)));
-}
-
-
 function sepBy(sep, rule) {
-    return optional(sepBy1(sep, rule));
+    return optional(seq(
+        rule,
+        repeat(seq(
+            sep,
+            rule)),
+    ));
 }

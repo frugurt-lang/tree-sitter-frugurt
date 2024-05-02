@@ -801,6 +801,16 @@
     "type": "set_field_statement",
     "named": true,
     "fields": {
+      "field": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "value": {
         "multiple": false,
         "required": true,
@@ -816,7 +826,51 @@
         "required": true,
         "types": [
           {
+            "type": "block_expression",
+            "named": true
+          },
+          {
+            "type": "bool_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "curry_call_expression",
+            "named": true
+          },
+          {
             "type": "field_access_expression",
+            "named": true
+          },
+          {
+            "type": "function_expression",
+            "named": true
+          },
+          {
+            "type": "if_expression",
+            "named": true
+          },
+          {
+            "type": "instantiation_expression",
+            "named": true
+          },
+          {
+            "type": "nah_literal",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "variable",
             "named": true
           }
         ]

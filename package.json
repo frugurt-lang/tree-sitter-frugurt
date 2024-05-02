@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-frugurt",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Frugurt grammar for tree-sitter",
   "repository": "github:tree-sitter/tree-sitter-frugurt",
   "license": "MIT",

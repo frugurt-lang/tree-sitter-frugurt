@@ -12,14 +12,14 @@
 "static" @keyword
 "watch" @keyword
 "while" @keyword
-"constraints @keyword
-"impl @keyword
+"constraints" @keyword
+"impl" @keyword
 
 
 (number_literal) @number
 (string_literal) @string
 (bool_literal) @bool
-
+(comment) @comment
 
 (let_statement
     ident: (identifier) @function.declaration

@@ -11,8 +11,11 @@ module.exports = grammar({
     word: $ => $.identifier,
 
     supertypes: $ => [
-        $._expression,
         $._statement,
+        $._expression,
+        $._expression_unit,
+        $._type_extension,
+        $._literal,
     ],
 
 
@@ -151,8 +154,8 @@ module.exports = grammar({
             "{",
             // fields
             repeat(field("fields", $.type_field)),
-            repeat(field("sections", $._type_section)),
             "}",
+            repeat(field("extensions", $._type_extension)),
         ),
 
         type_type: _ => choice("struct", "class", "data"),
@@ -172,42 +175,39 @@ module.exports = grammar({
             ";",
         ),
 
-        _type_section: $ => choice(
-            $.type_impl_section,
-            $.type_static_section,
-            $.type_constraints_section,
+        _type_extension: $ => choice(
+            $.type_impl_extension,
+            $.type_constraints_extension,
         ),
 
-        type_impl_section: $ => seq(
-            "-----impl-----",
+        type_impl_extension: $ => seq(
+            "impl",
+            "{",
             repeat(field("methods", $.type_method)),
-        ),
-
-        type_static_section: $ => seq(
-            "-----static-----",
-            repeat(field("methods", $.type_method)),
-        ),
-
-        type_constraints_section: $ => seq(
-            "-----constraints-----",
-            repeat(field("watches", $.type_watch)),
+            "}",
         ),
 
         type_method: $ => seq(
+            optional(field("static", "static")),
             field("ident", $.identifier),
-            "(",
-            sepBy(",", field("args", $.identifier)),
-            ")",
+            field("parameters", $.formal_parameters),
             field("body", choice(
                 $.block_statement,
                 $.block_expression,
             )),
         ),
 
+        type_constraints_extension: $ => seq(
+            "constraints",
+            "{",
+            repeat(field("watches", $.type_watch)),
+            "}",
+        ),
+
         type_watch: $ => seq(
             "watch",
             "(",
-            sepBy(",", field("args", $.identifier)),
+            sepBy(field("args", $.identifier)),
             ")",
             field("body", $.block_statement),
         ),
@@ -251,14 +251,24 @@ module.exports = grammar({
 
         function_expression: $ => seq(
             "fn",
-            "(",
-            sepBy(",", field("args", $.identifier)),
-            ")",
+            field("parameters", $.formal_parameters),
             field("body", choice(
                 $.block_statement,
                 $.block_expression,
             )),
         ),
+
+        formal_parameters: $ => seq(
+            "(",
+            sepBy(field("args",
+                choice(
+                    $.positional_parameter,
+                ),
+            )),
+            ")",
+        ),
+
+        positional_parameter: $ => field("ident", $.identifier),
 
         block_expression: $ => seq(
             "{",
@@ -269,24 +279,45 @@ module.exports = grammar({
 
         call_expression: $ => seq(
             field("what", $._expression_unit),
-            "(",
-            sepBy(",", field("args", $._expression)),
-            ")",
+            field("args", alias($.argument_list_call, $.argument_list)),
         ),
 
         curry_call_expression: $ => seq(
             field("what", $._expression_unit),
-            "$(",
-            sepBy(",", field("args", $._expression)),
-            ")",
+            field("args", alias($.argument_list_curry_call, $.argument_list)),
         ),
 
         instantiation_expression: $ => seq(
             field("what", $._expression_unit),
+            field("args", alias($.argument_list_instantiation, $.argument_list)),
+        ),
+
+        argument_list_call: $ => seq(
+            "(",
+            sepBy(field("args", choice(
+                $.positional_argument,
+            ))),
+            ")",
+        ),
+
+        argument_list_curry_call: $ => seq(
+            "$(",
+            sepBy(field("args", choice(
+                $.positional_argument,
+            ))),
+            ")",
+        ),
+
+        argument_list_instantiation: $ => seq(
             ":{",
-            sepBy(",", field("args", $._expression)),
+            sepBy(field("args", choice(
+                $.positional_argument,
+            ))),
             "}",
         ),
+
+
+        positional_argument: $ => field("value", $._expression),
 
         field_access_expression: $ => seq(
             field("what", $._expression_unit),
@@ -336,11 +367,14 @@ module.exports = grammar({
 });
 
 
-function sepBy(sep, rule) {
-    return optional(seq(
-        rule,
-        repeat(seq(
-            sep,
-            rule)),
-    ));
+function sepBy(rule, sep = ",") {
+    return optional(
+        seq(
+            rule,
+            repeat(seq(
+                sep,
+                rule)),
+            optional(sep),
+        ),
+    );
 }

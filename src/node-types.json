@@ -154,6 +154,10 @@
         "required": false,
         "types": [
           {
+            "type": "named_argument",
+            "named": true
+          },
+          {
             "type": "positional_argument",
             "named": true
           }
@@ -367,6 +371,42 @@
     }
   },
   {
+    "type": "default_parameter",
+    "named": true,
+    "fields": {
+      "ident": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type_ident": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "expression_statement",
     "named": true,
     "fields": {
@@ -416,6 +456,10 @@
         "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": "default_parameter",
+            "named": true
+          },
           {
             "type": "positional_parameter",
             "named": true
@@ -587,6 +631,32 @@
     }
   },
   {
+    "type": "named_argument",
+    "named": true,
+    "fields": {
+      "ident": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "operator",
     "named": true,
     "fields": {}
@@ -694,6 +764,16 @@
       "ident": {
         "multiple": false,
         "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type_ident": {
+        "multiple": false,
+        "required": false,
         "types": [
           {
             "type": "identifier",

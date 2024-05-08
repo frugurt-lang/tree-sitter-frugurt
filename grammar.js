@@ -263,12 +263,29 @@ module.exports = grammar({
             sepBy(field("args",
                 choice(
                     $.positional_parameter,
+                    $.default_parameter,
                 ),
             )),
             ")",
         ),
 
-        positional_parameter: $ => field("ident", $.identifier),
+        positional_parameter: $ => seq(
+            field("ident", $.identifier),
+            optional(seq(
+                ":",
+                field("type_ident", $.identifier),
+            )),
+        ),
+
+        default_parameter: $ => seq(
+            field("ident", $.identifier),
+            optional(seq(
+                ":",
+                field("type_ident", $.identifier),
+            )),
+            "=",
+            field("value", $._expression),
+        ),
 
         block_expression: $ => seq(
             "{",
@@ -296,6 +313,7 @@ module.exports = grammar({
             "(",
             sepBy(field("args", choice(
                 $.positional_argument,
+                $.named_argument,
             ))),
             ")",
         ),
@@ -304,6 +322,7 @@ module.exports = grammar({
             "$(",
             sepBy(field("args", choice(
                 $.positional_argument,
+                $.named_argument,
             ))),
             ")",
         ),
@@ -312,12 +331,19 @@ module.exports = grammar({
             ":{",
             sepBy(field("args", choice(
                 $.positional_argument,
+                $.named_argument,
             ))),
             "}",
         ),
 
 
         positional_argument: $ => field("value", $._expression),
+
+        named_argument: $ => seq(
+            field("ident", $.identifier),
+            ":",
+            field("value", $._expression),
+        ),
 
         field_access_expression: $ => seq(
             field("what", $._expression_unit),

@@ -679,10 +679,6 @@
         {
           "type": "SYMBOL",
           "name": "type_impl_extension"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "type_constraints_extension"
         }
       ]
     },
@@ -764,112 +760,6 @@
                 "name": "block_expression"
               }
             ]
-          }
-        }
-      ]
-    },
-    "type_constraints_extension": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "constraints"
-        },
-        {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "FIELD",
-            "name": "watches",
-            "content": {
-              "type": "SYMBOL",
-              "name": "type_watch"
-            }
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "}"
-        }
-      ]
-    },
-    "type_watch": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "watch"
-        },
-        {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "FIELD",
-                  "name": "args",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  }
-                },
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "STRING",
-                        "value": ","
-                      },
-                      {
-                        "type": "FIELD",
-                        "name": "args",
-                        "content": {
-                          "type": "SYMBOL",
-                          "name": "identifier"
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": ","
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": ")"
-        },
-        {
-          "type": "FIELD",
-          "name": "body",
-          "content": {
-            "type": "SYMBOL",
-            "name": "block_statement"
           }
         }
       ]

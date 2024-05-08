@@ -177,7 +177,6 @@ module.exports = grammar({
 
         _type_extension: $ => choice(
             $.type_impl_extension,
-            $.type_constraints_extension,
         ),
 
         type_impl_extension: $ => seq(
@@ -195,21 +194,6 @@ module.exports = grammar({
                 $.block_statement,
                 $.block_expression,
             )),
-        ),
-
-        type_constraints_extension: $ => seq(
-            "constraints",
-            "{",
-            repeat(field("watches", $.type_watch)),
-            "}",
-        ),
-
-        type_watch: $ => seq(
-            "watch",
-            "(",
-            sepBy(field("args", $.identifier)),
-            ")",
-            field("body", $.block_statement),
         ),
 
         // Expressions

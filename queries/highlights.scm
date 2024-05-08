@@ -10,9 +10,7 @@
 "return" @keyword
 "struct" @keyword
 "static" @keyword
-"watch" @keyword
 "while" @keyword
-"constraints" @keyword
 "impl" @keyword
 
 

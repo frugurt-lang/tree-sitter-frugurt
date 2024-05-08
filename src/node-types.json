@@ -136,10 +136,6 @@
     "named": true,
     "subtypes": [
       {
-        "type": "type_constraints_extension",
-        "named": true
-      },
-      {
         "type": "type_impl_extension",
         "named": true
       }
@@ -878,22 +874,6 @@
     }
   },
   {
-    "type": "type_constraints_extension",
-    "named": true,
-    "fields": {
-      "watches": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "type_watch",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "type_field",
     "named": true,
     "fields": {
@@ -1067,32 +1047,6 @@
     "fields": {}
   },
   {
-    "type": "type_watch",
-    "named": true,
-    "fields": {
-      "args": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "body": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "block_statement",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "variable",
     "named": true,
     "fields": {
@@ -1243,10 +1197,6 @@
     "named": false
   },
   {
-    "type": "constraints",
-    "named": false
-  },
-  {
     "type": "continue",
     "named": false
   },
@@ -1316,10 +1266,6 @@
   },
   {
     "type": "true",
-    "named": false
-  },
-  {
-    "type": "watch",
     "named": false
   },
   {

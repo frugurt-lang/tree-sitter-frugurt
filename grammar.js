@@ -11,11 +11,11 @@ module.exports = grammar({
     word: $ => $.identifier,
 
     supertypes: $ => [
-        $._statement,
         $._expression,
         $._expression_unit,
-        $._type_extension,
         $._literal,
+        $._statement,
+        $._type_member,
     ],
 
 
@@ -27,9 +27,17 @@ module.exports = grammar({
         // TODO: maybe add ' as valid symbol
         identifier: _ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
+        maybe_typed_identifier: $ => seq(
+            field("ident", $.identifier),
+            optional(seq(
+                ":",
+                field("type_ident", $.identifier),
+            )),
+        ),
+
         operator: _ => choice(
             /[-+*\/%<>&|^!?]/,
-            /[-+*\/%=<>&|^!?][-+*\/%=<>&|^!?]+/, //I have no idea why {2,} does not work
+            /[-+*\/%=<>&|^!?][-+*\/%=<>&|^!?]+/, // I have no idea why {2,} does not work
         ),
 
         // http://stackoverflow.com/questions/13014947/regex-to-match-a-c-style-multiline-comment/36328890#36328890
@@ -49,7 +57,7 @@ module.exports = grammar({
             $.expression_statement,
             $.let_statement,
             $.set_statement,
-            $.set_field_statement,
+            $.set_prop_statement,
             $.if_statement,
             $.while_statement,
             $.return_statement,
@@ -70,7 +78,7 @@ module.exports = grammar({
             ";",
         ),
 
-        let_statement: $ => seq(
+        let_statement: $ => seq( // add optional typing
             "let",
             field("ident", $.identifier),
             "=",
@@ -85,10 +93,10 @@ module.exports = grammar({
             ";",
         ),
 
-        set_field_statement: $ => seq(
+        set_prop_statement: $ => seq(
             field("what", $._expression_unit),
             ".",
-            field("field", $.identifier),
+            field("ident", $.identifier),
             "=",
             field("value", $._expression),
             ";",
@@ -152,22 +160,22 @@ module.exports = grammar({
             field("type_type", $.type_type),
             field("ident", $.identifier),
             "{",
-            // fields
-            repeat(field("fields", $.type_field)),
+            repeat(field("members", $._type_member)),
             "}",
-            repeat(field("extensions", $._type_extension)),
+            optional(field("impl", $.type_impl)),
         ),
 
         type_type: _ => choice("struct", "class", "data"),
 
+        _type_member: $ => choice(
+            $.type_field,
+            $.type_property,
+        ),
+
         type_field: $ => seq(
             optional(field("pub", "pub")),
             optional(field("static", "static")),
-            field("ident", $.identifier),
-            optional(seq(
-                ":",
-                field("type_ident", $.identifier),
-            )),
+            field("ident", $.maybe_typed_identifier),
             optional(seq(
                 "=",
                 field("value", $._expression),
@@ -175,11 +183,38 @@ module.exports = grammar({
             ";",
         ),
 
-        _type_extension: $ => choice(
-            $.type_impl_extension,
+        type_property: $ => seq(
+            optional(field("pub", "pub")),
+            optional(field("static", "static")),
+            field("ident", $.maybe_typed_identifier),
+            "{",
+            repeat(field("items", $.type_property_item)),
+            "}",
         ),
 
-        type_impl_extension: $ => seq(
+        type_property_item: $ => choice(
+            seq(
+                field("type", "get"),
+                field("body", $.block_expression),
+            ),
+            seq(
+                field("type", "get"),
+                "=>",
+                field("body", $._expression),
+                ";",
+            ),
+            seq(
+                field("type", "set"),
+                optional(seq(
+                    "(",
+                    field("value_ident", $.maybe_typed_identifier),
+                    ")",
+                )),
+                field("body", $.block_statement),
+            ),
+        ),
+
+        type_impl: $ => seq(
             "impl",
             "{",
             repeat(field("methods", $.type_method)),
@@ -207,11 +242,12 @@ module.exports = grammar({
             $._literal,
             $.variable,
             $.function_expression,
+            $.parenthesized_expression,
             $.block_expression,
             $.call_expression,
             $.curry_call_expression,
             $.instantiation_expression,
-            $.field_access_expression,
+            $.prop_access_expression,
             $.if_expression,
         ),
 
@@ -253,7 +289,7 @@ module.exports = grammar({
             ")",
         ),
 
-        positional_parameter: $ => seq(
+        positional_parameter: $ => seq(// FIXME: make use of maybe_typed_identifier
             field("ident", $.identifier),
             optional(seq(
                 ":",
@@ -261,7 +297,7 @@ module.exports = grammar({
             )),
         ),
 
-        default_parameter: $ => seq(
+        default_parameter: $ => seq( // FIXME: make use of maybe_typed_identifier
             field("ident", $.identifier),
             optional(seq(
                 ":",
@@ -269,6 +305,12 @@ module.exports = grammar({
             )),
             "=",
             field("value", $._expression),
+        ),
+
+        parenthesized_expression: $ => seq(
+            "(",
+            field("expr", $._expression),
+            ")",
         ),
 
         block_expression: $ => seq(
@@ -329,10 +371,10 @@ module.exports = grammar({
             field("value", $._expression),
         ),
 
-        field_access_expression: $ => seq(
+        prop_access_expression: $ => seq(
             field("what", $._expression_unit),
             ".",
-            field("field", $.identifier),
+            field("ident", $.identifier),
         ),
 
         binary_expression: $ => choice(

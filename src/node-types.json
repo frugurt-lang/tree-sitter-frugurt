@@ -34,10 +34,6 @@
         "named": true
       },
       {
-        "type": "field_access_expression",
-        "named": true
-      },
-      {
         "type": "function_expression",
         "named": true
       },
@@ -47,6 +43,14 @@
       },
       {
         "type": "instantiation_expression",
+        "named": true
+      },
+      {
+        "type": "parenthesized_expression",
+        "named": true
+      },
+      {
+        "type": "prop_access_expression",
         "named": true
       },
       {
@@ -114,7 +118,7 @@
         "named": true
       },
       {
-        "type": "set_field_statement",
+        "type": "set_prop_statement",
         "named": true
       },
       {
@@ -132,11 +136,15 @@
     ]
   },
   {
-    "type": "_type_extension",
+    "type": "_type_member",
     "named": true,
     "subtypes": [
       {
-        "type": "type_impl_extension",
+        "type": "type_field",
+        "named": true
+      },
+      {
+        "type": "type_property",
         "named": true
       }
     ]
@@ -419,32 +427,6 @@
     }
   },
   {
-    "type": "field_access_expression",
-    "named": true,
-    "fields": {
-      "field": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "what": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_expression_unit",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "formal_parameters",
     "named": true,
     "fields": {
@@ -627,6 +609,32 @@
     }
   },
   {
+    "type": "maybe_typed_identifier",
+    "named": true,
+    "fields": {
+      "ident": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type_ident": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "named_argument",
     "named": true,
     "fields": {
@@ -738,6 +746,22 @@
     }
   },
   {
+    "type": "parenthesized_expression",
+    "named": true,
+    "fields": {
+      "expr": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "positional_argument",
     "named": true,
     "fields": {
@@ -780,6 +804,32 @@
     }
   },
   {
+    "type": "prop_access_expression",
+    "named": true,
+    "fields": {
+      "ident": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "what": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression_unit",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "return_statement",
     "named": true,
     "fields": {
@@ -796,10 +846,10 @@
     }
   },
   {
-    "type": "set_field_statement",
+    "type": "set_prop_statement",
     "named": true,
     "fields": {
-      "field": {
+      "ident": {
         "multiple": false,
         "required": true,
         "types": [
@@ -882,7 +932,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "maybe_typed_identifier",
             "named": true
           }
         ]
@@ -907,16 +957,6 @@
           }
         ]
       },
-      "type_ident": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
       "value": {
         "multiple": false,
         "required": false,
@@ -930,7 +970,7 @@
     }
   },
   {
-    "type": "type_impl_extension",
+    "type": "type_impl",
     "named": true,
     "fields": {
       "methods": {
@@ -996,35 +1036,129 @@
     }
   },
   {
+    "type": "type_property",
+    "named": true,
+    "fields": {
+      "ident": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "maybe_typed_identifier",
+            "named": true
+          }
+        ]
+      },
+      "items": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "type_property_item",
+            "named": true
+          }
+        ]
+      },
+      "pub": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "pub",
+            "named": false
+          }
+        ]
+      },
+      "static": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "static",
+            "named": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "type_property_item",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          },
+          {
+            "type": "block_expression",
+            "named": true
+          },
+          {
+            "type": "block_statement",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "get",
+            "named": false
+          },
+          {
+            "type": "set",
+            "named": false
+          }
+        ]
+      },
+      "value_ident": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "maybe_typed_identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "type_statement",
     "named": true,
     "fields": {
-      "extensions": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "_type_extension",
-            "named": true
-          }
-        ]
-      },
-      "fields": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "type_field",
-            "named": true
-          }
-        ]
-      },
       "ident": {
         "multiple": false,
         "required": true,
         "types": [
           {
             "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "impl": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_impl",
+            "named": true
+          }
+        ]
+      },
+      "members": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "_type_member",
             "named": true
           }
         ]
@@ -1173,6 +1307,10 @@
     "named": false
   },
   {
+    "type": "=>",
+    "named": false
+  },
+  {
     "type": ">",
     "named": false
   },
@@ -1217,6 +1355,10 @@
     "named": false
   },
   {
+    "type": "get",
+    "named": false
+  },
+  {
     "type": "identifier",
     "named": true
   },
@@ -1250,6 +1392,10 @@
   },
   {
     "type": "return",
+    "named": false
+  },
+  {
+    "type": "set",
     "named": false
   },
   {

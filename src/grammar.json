@@ -115,6 +115,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "scope_modifier_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "expression_statement"
         },
         {
@@ -162,6 +166,42 @@
     "block_statement": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "body",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_statement"
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "scope_modifier_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "scope"
+        },
+        {
+          "type": "FIELD",
+          "name": "what",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        },
         {
           "type": "STRING",
           "value": "{"
@@ -956,17 +996,21 @@
       ]
     },
     "_expression": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_expression_unit"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "binary_expression"
-        }
-      ]
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression_unit"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "binary_expression"
+          }
+        ]
+      }
     },
     "_expression_unit": {
       "type": "CHOICE",
@@ -981,6 +1025,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "scope_expression"
+        },
+        {
+          "type": "SYMBOL",
           "name": "function_expression"
         },
         {
@@ -990,6 +1038,10 @@
         {
           "type": "SYMBOL",
           "name": "block_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "scope_modifier_expression"
         },
         {
           "type": "SYMBOL",
@@ -1010,6 +1062,10 @@
         {
           "type": "SYMBOL",
           "name": "if_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "import_expression"
         }
       ]
     },
@@ -1066,6 +1122,23 @@
         "type": "SYMBOL",
         "name": "identifier"
       }
+    },
+    "scope_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "scope"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
     },
     "function_expression": {
       "type": "SEQ",
@@ -1297,6 +1370,50 @@
     "block_expression": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "body",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_statement"
+            }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "expr",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "scope_modifier_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "scope"
+        },
+        {
+          "type": "FIELD",
+          "name": "what",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        },
         {
           "type": "STRING",
           "value": "{"
@@ -2289,6 +2406,23 @@
                 "name": "if_expression"
               }
             ]
+          }
+        }
+      ]
+    },
+    "import_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "import"
+        },
+        {
+          "type": "FIELD",
+          "name": "path",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_expression"
           }
         }
       ]

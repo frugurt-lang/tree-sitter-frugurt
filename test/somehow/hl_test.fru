@@ -18,6 +18,17 @@ while a >= 0 {
     continue;
 }
 
+let f1 = fn() {
+    let a = 5;
+    let b = 3;
+    scope()
+};
+
+scope f1() {
+    print(a + b);
+}
+
+
 struct Box {
     pub x;
     y : Number;

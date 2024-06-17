@@ -42,6 +42,10 @@
         "named": true
       },
       {
+        "type": "import_expression",
+        "named": true
+      },
+      {
         "type": "instantiation_expression",
         "named": true
       },
@@ -51,6 +55,14 @@
       },
       {
         "type": "prop_access_expression",
+        "named": true
+      },
+      {
+        "type": "scope_expression",
+        "named": true
+      },
+      {
+        "type": "scope_modifier_expression",
         "named": true
       },
       {
@@ -115,6 +127,10 @@
       },
       {
         "type": "return_statement",
+        "named": true
+      },
+      {
+        "type": "scope_modifier_statement",
         "named": true
       },
       {
@@ -557,6 +573,22 @@
     }
   },
   {
+    "type": "import_expression",
+    "named": true,
+    "fields": {
+      "path": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "instantiation_expression",
     "named": true,
     "fields": {
@@ -836,6 +868,73 @@
       "value": {
         "multiple": false,
         "required": false,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "scope_expression",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "scope_modifier_expression",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "_statement",
+            "named": true
+          }
+        ]
+      },
+      "expr": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      },
+      "what": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "scope_modifier_statement",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "_statement",
+            "named": true
+          }
+        ]
+      },
+      "what": {
+        "multiple": false,
+        "required": true,
         "types": [
           {
             "type": "_expression",
@@ -1371,6 +1470,10 @@
     "named": false
   },
   {
+    "type": "import",
+    "named": false
+  },
+  {
     "type": "let",
     "named": false
   },
@@ -1392,6 +1495,10 @@
   },
   {
     "type": "return",
+    "named": false
+  },
+  {
+    "type": "scope",
     "named": false
   },
   {

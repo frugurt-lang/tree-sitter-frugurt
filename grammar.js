@@ -18,7 +18,6 @@ module.exports = grammar({
         $._type_member,
     ],
 
-
     rules: {
         source_file: $ => repeat(field("body", $._statement)),
 
@@ -54,6 +53,7 @@ module.exports = grammar({
 
         _statement: $ => choice(
             $.block_statement,
+            $.scope_modifier_statement,
             $.expression_statement,
             $.let_statement,
             $.set_statement,
@@ -68,6 +68,14 @@ module.exports = grammar({
         ),
 
         block_statement: $ => seq(
+            "{",
+            repeat(field("body", $._statement)),
+            "}",
+        ),
+
+        scope_modifier_statement: $ => seq(
+            "scope",
+            field("what", $._expression),
             "{",
             repeat(field("body", $._statement)),
             "}",
@@ -233,22 +241,25 @@ module.exports = grammar({
 
         // Expressions
 
-        _expression: $ => choice(
+        _expression: $ => prec.left(choice(
             $._expression_unit,
             $.binary_expression,
-        ),
+        )),
 
         _expression_unit: $ => choice(
             $._literal,
             $.variable,
+            $.scope_expression,
             $.function_expression,
             $.parenthesized_expression,
             $.block_expression,
+            $.scope_modifier_expression,
             $.call_expression,
             $.curry_call_expression,
             $.instantiation_expression,
             $.prop_access_expression,
             $.if_expression,
+            $.import_expression,
         ),
 
         _literal: $ => choice(
@@ -268,6 +279,8 @@ module.exports = grammar({
         nah_literal: _ => "nah",
 
         variable: $ => field("ident", $.identifier),
+
+        scope_expression: _ => seq("scope", "(", ")"),
 
         function_expression: $ => seq(
             "fn",
@@ -314,6 +327,15 @@ module.exports = grammar({
         ),
 
         block_expression: $ => seq(
+            "{",
+            repeat(field("body", $._statement)),
+            field("expr", $._expression),
+            "}",
+        ),
+
+        scope_modifier_expression: $ => seq(
+            "scope",
+            field("what", $._expression),
             "{",
             repeat(field("body", $._statement)),
             field("expr", $._expression),
@@ -414,6 +436,11 @@ module.exports = grammar({
                 $.block_expression,
                 $.if_expression,
             )),
+        ),
+
+        import_expression: $ => seq(
+            "import",
+            field("path", $._expression),
         ),
     },
 });
